@@ -5,7 +5,7 @@ defmodule Pento.MixProject do
     [
       app: :pento,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.13",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -32,7 +32,8 @@ defmodule Pento.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bcrypt_elixir, "~> 3.0"},
+      #      {:bcrypt_elixir, "~> 3.0"},
+      {:bcrypt_elixir, github: "riverrun/bcrypt_elixir"},
       {:phoenix, "~> 1.7.2"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},

@@ -1,20 +1,16 @@
 defmodule PentoWeb.WrongLive do
   use PentoWeb, :live_view
 
-  def mount(_params, _session, socket) do
-    {:ok, init_socket(socket)}
-  end
-
-  defp init_socket(socket, opts \\ []) do
-    score = Keyword.get(opts, :score, 0)
-
-    assign(
-      socket,
-      score: score,
-      answer: Enum.random(1..10) |> to_string(),
-      message: "Make a guess:",
-      guessed_correctly?: false
-    )
+  def mount(_params, session, socket) do
+    {:ok,
+     assign(
+       socket,
+       score: 0,
+       answer: Enum.random(1..10) |> to_string(),
+       message: "Make a guess:",
+       guessed_correctly?: false,
+       session_id: session["live_socket_id"]
+     )}
   end
 
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
@@ -33,6 +29,10 @@ defmodule PentoWeb.WrongLive do
             <%= n %>
           </.link>
         <% end %>
+        <pre>
+          <%= @current_user.email %>
+          <%= @session_id %>
+        </pre>
       </h2>
     <% end %>
     """
@@ -42,6 +42,7 @@ defmodule PentoWeb.WrongLive do
     message = "Your guess: #{guess}. Correct!"
 
     score = socket.assigns.score + 1
+    socket = put_flash(socket, :info, "You guessed correctly!")
 
     {
       :noreply,
@@ -59,8 +60,15 @@ defmodule PentoWeb.WrongLive do
     }
   end
 
-  def handle_params(params, _uri, socket) do
+  def handle_params(_params, _uri, socket) do
     score = socket.assigns.score
-    {:noreply, init_socket(socket, score: score)}
+
+    {:noreply,
+     assign(socket,
+       score: score,
+       answer: Enum.random(1..10) |> to_string(),
+       message: "Make a guess:",
+       guessed_correctly?: false
+     )}
   end
 end
