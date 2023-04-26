@@ -16,7 +16,7 @@ defmodule Pento.Application do
       {Phoenix.PubSub, name: Pento.PubSub},
       # Start Finch
       {Finch, name: Pento.Finch},
-      # Start the Endpoint (http/https)
+      # Endpoint
       PentoWeb.Endpoint
       # Start a worker by calling: Pento.Worker.start_link(arg)
       # {Pento.Worker, arg}
