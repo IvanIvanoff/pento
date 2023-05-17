@@ -21,17 +21,18 @@ defmodule PentoWeb.ChatLive do
     <div>
       <div
         id="messages"
-        class="flex-1 p:2 sm:p-6 justify-between flex flex-col overflow-y-auto scrolling-auto h-96"
+        class="flex-1 p:2 sm:p-6 justify-between flex flex-col-reverse overflow-y-auto scrolling-auto h-96"
       >
         <.table id="messages" rows={@streams.messages}>
-          <:col :let={{_id, message}} label="User"><%= message.user %></:col>
+          <:col :let={{_id, message}} label="User" class="w-8"><%= message.user %></:col>
+          <:col :let={{_id, message}} label="Time"><%= message.inserted_at %></:col>
           <:col :let={{_id, message}} label="Message"><%= message.text %></:col>
         </.table>
       </div>
 
       <form phx-submit="send_msg">
         <input type="text" name="text" />
-        <button type="submit">Send</button>
+        <.button type="submit">Send</.button>
       </form>
     </div>
     """
@@ -57,6 +58,6 @@ defmodule PentoWeb.ChatLive do
   end
 
   def time() do
-    DateTime.utc_now() |> DateTime.truncate(:second) |> to_string()
+    Time.utc_now()|> Time.truncate(:second) |> to_string()
   end
 end

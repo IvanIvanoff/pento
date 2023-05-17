@@ -23,6 +23,7 @@ defmodule PentoWeb.Router do
     get "/", PageController, :home
 
     live "/clock", ClockLive
+    live "/counter", CounterLive
   end
 
   # Other scopes may use custom stacks.
