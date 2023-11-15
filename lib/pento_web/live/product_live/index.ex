@@ -13,8 +13,6 @@ defmodule PentoWeb.ProductLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
-    IO.inspect(params, label: "PARAMS")
-    IO.inspect(socket.assigns.live_action, label: "LIVE ACTION")
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
